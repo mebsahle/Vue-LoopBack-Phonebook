@@ -25,7 +25,7 @@ export default {
             title: "Phonebook",
             navs: [],
             noAuthNav: [
-                // {name: 'login', route: 'Login'},
+                {name: 'login', route: 'Login'},
                 {name: 'sign up', route: 'SignUp'},
             ],
             authNav: [
