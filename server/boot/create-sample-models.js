@@ -12,3 +12,21 @@ module.exports = function(app) {
         // });
     });
 };
+
+module.exports = function(app) {
+    app.dataSources.contactInfo.autoupdate('Contacts_Info', function(err) {
+        if(err) throw err;
+
+        // app.models.Contacts_Info.create([{
+        //     BasicInfo: 'Abysinia Mesfin',
+        //     Email: 'abyssinia@gmail.com',
+        //     PhoneNumber: '+251938000001',
+        //     Address: 'Jemmo 1',
+        //     WorkingArea: 'Cybersecurity'
+        // }], function(err, Contacts_Infos) {
+        //     if(err) throw err;
+
+        //     console.log('ContactsInfo model: \n', Contacts_Infos);
+        // });
+    });
+};
