@@ -35,5 +35,9 @@
   "Role": {
     "dataSource": "db",
     "public": false
+  },
+  "Contacts_Info": {
+    "dataSource": "contactInfo",
+    "public": true
   }
 }
