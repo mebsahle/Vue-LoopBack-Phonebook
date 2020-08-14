@@ -37,6 +37,19 @@ export default {
   methods: {
     onLoggedIn() {
         this.navs=this.authNav;
+
+    data() {
+        return {
+            title: "Phonebook",
+            navs: [],
+            noAuthNav: [
+                {name: 'login', route: 'Login'},
+                {name: 'sign up', route: 'SignUp'},
+            ],
+            authNav: [
+                {name: 'logout', route: 'Logout'}
+            ],
+        }
     },
     onLogout() {
         this.navs=this.noAuthNav;
