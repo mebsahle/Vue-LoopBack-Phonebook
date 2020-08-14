@@ -2,5 +2,15 @@
   "db": {
     "name": "db",
     "connector": "memory"
+  },
+  "userDs": {
+    "host": "localhost",
+    "port": 3306,
+    "url": "",
+    "database": "Phonebook_",
+    "password": "*******",
+    "name": "userDs",
+    "user": "root",
+    "connector": "mysql"
   }
 }

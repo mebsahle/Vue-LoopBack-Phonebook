@@ -32,20 +32,31 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
     data() {
         return {
             email: '',
             password: '',
+            token: localStorage.getItem('accToken')
         }
     },
     methods: {
         register() {
-            // const user = {
-            //     email: this.email,
-            //     password: this.password
-            // }
+            const user = {
+                email: this.email,
+                password: this.password
+            }
 
+            axios.post('http://localhost:3000/api/Users?access_token=' + this.token, user)
+            .then((response) => {
+                console.log(response);
+
+                this.$router.push('/login')
+            })
+            .catch((error) => {
+                console.log(error);
+            })
         }
     }
 }

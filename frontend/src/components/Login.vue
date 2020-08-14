@@ -28,7 +28,7 @@
 </template>
 
 <script>
-// import axios from 'axios'
+import axios from 'axios'
 export default {
     data() {
         return {
@@ -49,6 +49,20 @@ export default {
             }
             console.log(credentials)
             this.clearInput()
+            
+            axios.post('http://localhost:3000/api/Users/login', credentials)
+            .then(response => {
+                console.log(response)
+                localStorage.setItem('accToken', this.token)
+                this.clearInput()
+
+                this.$bus.$emit('loggedIn')
+                this.$router.push('/')
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+
         }
     }
 }
