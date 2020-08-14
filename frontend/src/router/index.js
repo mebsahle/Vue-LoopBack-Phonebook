@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-// import Login from '@/components/Login'
+import Login from '@/components/Login'
 import SignUp from '@/components/SignUp'
-// import Logout from '@/components/Logout'
+import Logout from '@/components/Logout'
 
 
 Vue.use(VueRouter)
@@ -14,21 +14,21 @@ Vue.use(VueRouter)
     name: 'Home',
     component: Home
   },
-  // {
-  //   path: '/login',
-  //   name: 'Login',
-  //   component: Login
-  // },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
+  },
   {
     path: '/signup',
     name: 'SignUp',
     component: SignUp
   },
-  // {
-  //   path: '/logout',
-  //   name: 'Logout',
-  //   component: Logout
-  // },
+  {
+    path: '/logout',
+    name: 'Logout',
+    component: Logout
+  },
   {
     path: '/about',
     name: 'About',
