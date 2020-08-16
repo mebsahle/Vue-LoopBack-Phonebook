@@ -39,5 +39,13 @@
   "Contacts_Info": {
     "dataSource": "contactInfo",
     "public": true
+  },
+  "Container": {
+    "dataSource": "contactsImage",
+    "public": true
+  },
+  "StorageFile": {
+    "dataSource": "fileStorage",
+    "public": true
   }
 }

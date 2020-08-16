@@ -22,5 +22,21 @@
     "name": "contactInfo",
     "user": "root",
     "connector": "mysql"
+  },
+  "contactsImage": {
+    "name": "contactsImage",
+    "connector": "loopback-component-storage",
+    "provider": "filesystem",
+    "root": "./server/storage"
+  },
+  "fileStorage": {
+    "host": "localhost",
+    "port": 3306,
+    "url": "",
+    "database": "Phonebook_",
+    "password": "lunatic",
+    "name": "fileStorage",
+    "user": "root",
+    "connector": "mysql"
   }
 }

@@ -30,3 +30,18 @@ module.exports = function(app) {
         // });
     });
 };
+
+module.exports = function(app) {
+    app.dataSources.fileStorage.autoupdate('StorageFile', function(err) {
+        if (err) throw err;
+        
+        // app.models.StorageFile.create([{
+        //     name: 'OO.jpeg',
+        //     type: 'image/jpeg',
+        //     url: '/api/containers/common/download/OO.jpeg'
+        // }], function(err, StorageFiles) {
+        //     if(err) throw err;
+        //     console.log('StorageFile: \n', StorageFiles)
+        // });
+    });
+};
