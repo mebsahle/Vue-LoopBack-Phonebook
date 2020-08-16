@@ -8,14 +8,13 @@
 
 <script>
 export default {
-    methods: {
-        created() {
-            localStorage.removeItem('accToken');
-        },
-        mounted() {
-            
-        }
-    }
+  created() {
+    localStorage.removeItem('accToken');
+  },
+  mounted() {
+    this.$bus.$emit('logOut')
+    this.$router.push('/login');
+  }
 }
 </script>
 
