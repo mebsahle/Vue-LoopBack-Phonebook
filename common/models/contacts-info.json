@@ -25,6 +25,9 @@
     "WorkingArea": {
       "type": "string",
       "required": true
+    },
+    "picture": {
+      "type": "string"
     }
   },
   "validations": [],

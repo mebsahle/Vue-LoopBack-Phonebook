@@ -40,18 +40,17 @@
                       <v-text-field v-model="editedItem.Address" label="Address"></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="6" md="4">
-                      <v-text-field v-model="editedItem.WorkingArea" label="Woring Area"></v-text-field>
+                      <v-text-field v-model="editedItem.WorkingArea" label="Working Area"></v-text-field>
                     </v-col>
                     <v-col>
                       <v-file-input
-                          v-model="editedItem.picture"
-                          :rules="rules"
-                          accept="multipart/form-data"
-                          placeholder="pick avatar"
-                          prepend-icon="mdi-camera"
-                          label="picture"
-                          id="file"
-                          ref="file"
+                        v-model="picture"
+                        :rules="rules"
+                        headers="multipart/form-data"
+                        accept="image/*"
+                        placeholder="pick avatar"
+                        prepend-icon="mdi-camera"
+                        label="picture"
                       >
                       </v-file-input>
                     </v-col>
@@ -74,8 +73,13 @@
 
       <!-- buttons of the form -->
       <template v-slot:item.picture="{item}">
-       <div class="p-2">
-          <img :src="item.picture" style="width: 50px; height: 50px" :alt="item.picture"/>
+        <!-- <h5>{{item.picture}}</h5> -->
+        <div class="p-3">
+          <v-row justify="space-around">
+            <v-avatar size="48">
+              <span class="white--text headline"><img :src="getPicture(item.picture)" style="width: 48px; height: 55px;" :alt="item.picture"/></span>
+            </v-avatar>
+          </v-row>
         </div>
       </template>
 
@@ -103,7 +107,7 @@ export default {
     dialog: false,
     headers: [
       { text: '', align: 'left', sortable: false, value: 'picture'},
-      { text: 'Basic Info', align: 'start', value: 'BasicInfo' },
+      { text: 'Basic Info', align: 'start', value: 'BasicInfo', picture: ''},
       { text: 'Email', value: 'Email'},
       { text: 'Phone Number', value: 'PhoneNumber'},
       { text: 'Address', value: 'Address'},
@@ -117,7 +121,8 @@ export default {
       Email: '',
       PhoneNumber: '',
       Address: '',
-      WorkingArea: ''
+      WorkingArea: '',
+      picture:''
     },
     defaultItem: {
       value: false,
@@ -125,7 +130,8 @@ export default {
       Email: '',
       PhoneNumber: '',
       Address: '',
-      WorkingArea: ''
+      WorkingArea: '',
+      picture: ''
     },
     token: localStorage.getItem('accToken'),
     rules: [
@@ -146,8 +152,9 @@ export default {
     this.getContacts()
   },
   methods: {
+    // console.log() statements are to check the data validity
     initialize() {
-
+      this.getContacts()
     },
     getContacts() {
       // this will help to get data from the database 
@@ -165,16 +172,25 @@ export default {
         PhoneNumber: this.editedItem.PhoneNumber,
         Address: this.editedItem.Address,
         WorkingArea: this.editedItem.WorkingArea,
+        picture: this.picture.name
       }
 
-      console.log('contactinfo', contact_data)
+      // console.log('contactinfo', contact_data)
       axios.post('http://localhost:3000/api/Contacts_Infos?access_token=' + this.token, contact_data)
       .then(response => {
         console.log('Here', response.data)
         this.getContacts();
       })
     },
+    getPicture(picture) {
+      // get picture name and read it from the database
+      // console.log('getPict', picture)
+      var picPath = 'http://localhost:3000/api/containers/common/download/'+picture;
+      // console.log(picPath)
+      return picPath
+    },
     editItem (item) {
+      // console.log('Here two', this.contacts.indexOf(item),Object.assign({}, item))
       this.editedIndex = this.contacts.indexOf(item) + 1
       this.editedItemId = Object.assign({}, item).id
       this.editedItem = Object.assign({}, item)
@@ -189,10 +205,10 @@ export default {
         Address: this.editedItem.Address,
         WorkingArea: this.editedItem.WorkingArea,
         id: editedItemId,
-        // picture: this.editedItem.picture.name
+        picture: this.picture.name
       }
-      console.log(this.editedItemId)
-      console.log(data)
+      // console.log('editeed version', this.picture.name)
+      // console.log(data)
       
       const url = `/api/Contacts_Infos/${this.editedItemId}?access_token=` + this.token;
       axios.patch('http://localhost:3000'+url, data)
@@ -206,7 +222,7 @@ export default {
       const index = this.contacts.indexOf(item)
       const idItem = Object.assign({},item).id
       confirm('Are you sure you want to delete this item?') && this.contacts.splice(index, 1)
-      console.log(idItem)
+      // console.log(idItem)
 
       // console.log('ID', Object.assign({},item).id)
       const url = `/api/Contacts_Infos/${idItem}?access_token=`
@@ -229,6 +245,19 @@ export default {
       if (this.editedIndex > -1) {
         this.editedContact(this.editedItemId);
         Object.assign(this.contacts[this.editedIndex-1], this.editedItem);
+
+        // send picture file to common/models/storage-file.js
+        const fileObj = new FormData();
+        fileObj.append('image', this.picture)
+        
+        // console.log('formdata', fileObj)
+        axios.post('http://localhost:3000/api/StorageFiles/upload', fileObj)
+        .then(res => {
+          console.log(res);
+        })
+        .catch(function() {
+          console.log('Failed')
+        });
       } else {
         this.addContact();
         this.contacts.push(this.editedItem);
