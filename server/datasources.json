@@ -34,7 +34,7 @@
     "port": 3306,
     "url": "",
     "database": "Phonebook_",
-    "password": "lunatic",
+    "password": "*******",
     "name": "fileStorage",
     "user": "root",
     "connector": "mysql"
