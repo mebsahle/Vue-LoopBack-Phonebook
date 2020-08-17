@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <v-data-table :headers="headers" :items="contacts" sort-by="BasicInfo" class="elevation-1">
+    <v-data-table :headers="headers" :search="search" :items="contacts" sort-by="BasicInfo" class="elevation-1">
       <template v-slot:top>
         <v-toolbar flat color="white">
           <h1>
@@ -10,6 +10,16 @@
           </h1>
 
           <v-divider class="mx-4" inset vertical></v-divider>
+          <!-- search field -->
+          <v-text-field
+            v-model="search"
+            append-icon="mdi-magnify"
+            label="Search..."
+            single-line
+            hide-details
+          >
+          </v-text-field>
+
           <v-spacer></v-spacer>
 
           <!-- to add new contact or to edit one -->
@@ -104,6 +114,7 @@ export default {
   name: 'Home',
   data: () => ({
     picture: null,
+    serach: '',
     dialog: false,
     headers: [
       { text: '', align: 'left', sortable: false, value: 'picture'},
