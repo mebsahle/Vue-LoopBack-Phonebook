@@ -4,7 +4,7 @@ import Home from '../views/Home.vue'
 import Login from '@/components/Login'
 import SignUp from '@/components/SignUp'
 import Logout from '@/components/Logout'
-
+import ChangePassword from '@/components/ChangePassword'
 
 Vue.use(VueRouter)
 
@@ -23,6 +23,11 @@ Vue.use(VueRouter)
     path: '/signup',
     name: 'SignUp',
     component: SignUp
+  },
+  {
+    path: '/change-password',
+    name: 'ChangePassword',
+    component: ChangePassword
   },
   {
     path: '/logout',
