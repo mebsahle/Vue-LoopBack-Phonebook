@@ -29,8 +29,10 @@ export default {
           {name: 'sign up', route: 'SignUp'},
       ],
       authNav: [
+          {name: 'Change Password',route: 'ChangePassword'},
           {name: 'logout', route: 'Logout'}
       ],
+      token: localStorage.getItem('accToken')
     }
   },
   name: 'App',
