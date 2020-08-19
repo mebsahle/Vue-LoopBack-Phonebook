@@ -29,7 +29,7 @@ export default {
           {name: 'sign up', route: 'SignUp'},
       ],
       authNav: [
-          {name: 'key-change',route: 'ChangePassword'},
+          {name: 'Change Password',route: 'ChangePassword'},
           {name: 'logout', route: 'Logout'}
       ],
       token: localStorage.getItem('accToken')

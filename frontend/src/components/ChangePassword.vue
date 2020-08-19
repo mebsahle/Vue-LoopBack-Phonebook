@@ -45,9 +45,9 @@ export default {
      //   this.clearInput()
        axios.post('http://localhost:3000/api/Users/change-password?access_token='+this.token, data)
          .then(response => {
-             console.log('Woo Hoooo',response)
+            //  console.log('Woo Hoooo',response)
              this.clearInput()
-             this.$router.push('/contactsorDesserts')
+             this.$router.push('/')
          });
      }
   }
