@@ -34,9 +34,39 @@
     "port": 3306,
     "url": "",
     "database": "Phonebook_",
-    "password": "*******",
+    "password": "******",
     "name": "fileStorage",
     "user": "root",
     "connector": "mysql"
+  },
+  "cipgsds": {
+    "host": "localhost",
+    "port": 5432,
+    "url": "",
+    "database": "Phonebook_",
+    "password": "******",
+    "name": "cipgsds",
+    "user": "meba",
+    "connector": "postgresql"
+  },
+  "fspgsds": {
+    "host": "localhost",
+    "port": 5432,
+    "url": "",
+    "database": "Phonebook_",
+    "password": "******",
+    "name": "fspgsds",
+    "user": "meba",
+    "connector": "postgresql"
+  },
+  "usrpgsds": {
+    "host": "localhost",
+    "port": 5432,
+    "url": "",
+    "database": "Phonebook_",
+    "password": "******",
+    "name": "usrpgsds",
+    "user": "meba",
+    "connector": "postgresql"
   }
 }

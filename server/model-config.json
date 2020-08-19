@@ -14,7 +14,7 @@
     ]
   },
   "User": {
-    "dataSource": "userDs",
+    "dataSource": "usrpgsds",
     "public": true
   },
   "AccessToken": {
@@ -37,7 +37,7 @@
     "public": false
   },
   "Contacts_Info": {
-    "dataSource": "contactInfo",
+    "dataSource": "cipgsds",
     "public": true
   },
   "Container": {
@@ -45,7 +45,7 @@
     "public": true
   },
   "StorageFile": {
-    "dataSource": "fileStorage",
+    "dataSource": "fspgsds",
     "public": true
   }
 }
