@@ -3,7 +3,14 @@
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
-    "validateUpsert": true
+    "validateUpsert": true,
+    "postgresql": {
+      "schema": "public",
+      "table": "contacts_info"
+    }
+  },
+  "mixins": {
+    "Timestamp": true
   },
   "properties": {
     "BasicInfo": {
