@@ -7,8 +7,38 @@
 
 const loopback = require('loopback');
 const boot = require('loopback-boot');
+const path = require('path'); // add path to use it configuring template-path
+const nodemailer = require('nodemailer'); // to setup email authentication
+
+// create reusable transporter object using default SMTP transport
+let transporter = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true,
+  auth: {
+    type: 'OAuth2',
+    user: 'mebatsionsahle@gmail.com',
+    clientId: "688584225307-a6udce8jctmth6u548up1tvs1bi57q4f.apps.googleusercontent.com",
+    clientSecret: "Hj98NenbebJ9C4z-y7DAvTLx"
+  },
+});
+
+transporter.set('oauth2_provision_cb', (user, renew, callback) => {
+  let accessToken = userTokens[user];
+  if(!accessToken) {
+    return callback(new Error('Unknown user'));
+  } else {
+    return callback(null, accessToken);
+  }
+});
 
 const app = module.exports = loopback();
+
+// configure template-view handler
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
+app.use(loopback.token());
 
 app.start = function() {
   // start the web server

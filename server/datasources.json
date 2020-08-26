@@ -68,5 +68,23 @@
     "name": "usrpgsds",
     "user": "meba",
     "connector": "postgresql"
+  },
+  "emailDs": {
+    "name": "emailDs",
+    "connector": "mail",
+    "transports": [
+      {
+        "type": "SMTP",
+        "host": "smtp.gmail.com",
+        "secure": true,
+        "port": 465,
+        "domain": "gmail.com",
+        "auth": {
+          "user": "you@gmail.com",
+          "pass": "yourgmailaccountpassword"
+        },
+        "authentication": "plain"
+      }
+    ]
   }
 }

@@ -94,7 +94,7 @@ module.exports = function(app) {
 };
 
 module.exports = function(app) {
-    app.dataSources.usrpgsds.autoupdate('User', function(err) {
+    app.dataSources.usrpgsds.autoupdate('user', function(err) {
         if (err) throw err;
 
         // app.models.User.create([{
