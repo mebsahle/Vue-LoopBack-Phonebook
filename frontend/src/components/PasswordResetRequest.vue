@@ -36,8 +36,6 @@ import axios from 'axios'
         user: {
           email: '',
         },
-        sent: false,
-        
       }
     },
     methods: {
