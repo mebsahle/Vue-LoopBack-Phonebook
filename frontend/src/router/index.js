@@ -5,6 +5,7 @@ import Login from '@/components/Login'
 import SignUp from '@/components/SignUp'
 import Logout from '@/components/Logout'
 import ChangePassword from '@/components/ChangePassword' // commit 9 or the ninth-branch
+import PasswordResetRequest from '@/components/PasswordResetRequest'
 
 Vue.use(VueRouter)
 
@@ -28,6 +29,11 @@ Vue.use(VueRouter)
     path: '/change-password',
     name: 'ChangePassword',
     component: ChangePassword
+  },
+  {
+    path: '/password-reset-request',
+    name: 'PasswordResetRequest',
+    component: PasswordResetRequest
   },
   {
     path: '/logout',

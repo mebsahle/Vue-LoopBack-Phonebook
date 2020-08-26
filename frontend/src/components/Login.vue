@@ -19,8 +19,10 @@
                   </v-form>
               </v-card-text>
               <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn @click="login" dark color="normal">Login</v-btn>
+                <v-btn @click="login" dark color="normal">Login</v-btn>
+                <v-spacer></v-spacer>
+                <v-btn @click="reqReset" text light color="normal">Forgot Password</v-btn>
+
               </v-card-actions>
           </v-card>
       </v-flex>
@@ -62,6 +64,9 @@ export default {
             .catch((error) => {
                 console.log(error);
             })
+        },
+        reqReset() {
+            this.$router.push('/password-reset-request')
 
         }
     }

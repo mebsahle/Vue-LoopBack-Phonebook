@@ -21,6 +21,7 @@
     "loopback-component-storage": "^3.7.0",
     "loopback-connector-mysql": "^5.4.4",
     "loopback-connector-postgresql": "^3.9.1",
+    "nodemailer": "^6.4.11",
     "serve-favicon": "^2.0.1",
     "strong-error-handler": "^3.0.0"
   },

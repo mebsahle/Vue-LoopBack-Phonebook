@@ -14,7 +14,7 @@
     ]
   },
   "User": {
-    "dataSource": "usrpgsds",
+    "dataSource": "UserDs",
     "public": true
   },
   "AccessToken": {
@@ -47,5 +47,15 @@
   "StorageFile": {
     "dataSource": "fspgsds",
     "public": true
+  },
+  "Email": {
+    "dataSource": "emailDs"
+  },
+  "user": {
+    "dataSource": "usrpgsds",
+    "public": true,
+    "options": {
+      "emailVerificationRequired": true
+    }
   }
 }
