@@ -67,6 +67,7 @@ export default {
         },
         reqReset() {
             this.$router.push('/password-reset-request')
+
         }
     }
 }
