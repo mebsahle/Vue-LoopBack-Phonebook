@@ -8,13 +8,29 @@
 
 <script>
 export default {
-  created() {
-    localStorage.removeItem('accToken');
-  },
-  mounted() {
-    this.$bus.$emit('logOut')
-    this.$router.push('/login');
-  }
+    data() {
+        return {
+            login: null,
+            password: null
+        }
+    },
+    computed:{
+      isLoggedIn: function(){
+        return this.$store.getters.isLoggedIn
+      }
+    },
+    mounted() {
+      this.$store.dispatch('logout')
+      .then(() => {
+        this.$store.dispatch('setSnackbar',{
+            message: 'Logged out successfully.',
+            color: 'green'
+        });
+        
+      })
+      this.$bus.$emit('logOut')
+      this.$router.push('/login');
+    }
 }
 </script>
 

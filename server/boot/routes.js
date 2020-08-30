@@ -92,6 +92,11 @@ module.exports = function(app) {
   //show password reset form
   app.get('/reset-password', function(req, res, next) {
     if (!req.accessToken) return res.sendStatus(401);
+    // use the vue component
+    // i.e.override the template form
+    res.redirect('http://localhost:8080/#/password-reset?access_token='
+    +req.accessToken.id)
+    // reset the password
     res.render('password-reset', {
       redirectUrl: '/api/users/reset-password?access_token='+
         req.accessToken.id

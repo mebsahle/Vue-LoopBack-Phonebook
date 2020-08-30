@@ -3,7 +3,7 @@
     <v-flex xs12 sm8 md4>
       <v-card class="elevation-12">
         <v-toolbar dark color="normal">
-            <v-toolbar-title>Password Reset</v-toolbar-title>
+            <v-toolbar-title>Password Reset*</v-toolbar-title>
             <v-spacer></v-spacer>
         </v-toolbar>
 
@@ -14,7 +14,8 @@
                           name="email"
                           label="Email"
                           type="text"
-                          required>
+                          required
+                          :rules="emailRules">
             </v-text-field>
 
           </v-card-text>
@@ -36,7 +37,10 @@ import axios from 'axios'
         user: {
           email: '',
         },
-        sent: false,
+        emailRules: [
+            e => !!e || 'Email is required',
+            e => /.+@..+/.test(e) || 'Email must be valid'
+        ],
         
       }
     },
@@ -46,12 +50,16 @@ import axios from 'axios'
       },
       onReset() { 
         var email = {email: this.email}
+        // e.preventDefault();
         console.log(email)
         axios.post('http://localhost:3000/api/users/reset', email)
           .then((response) => {
             console.log(response);
 
-            alert('Your request has been sent.Check your email for further instructions.')
+            this.$store.dispatch('setSnackbar',{
+              message: 'Your request is being processed. Please check your email.',
+              color: 'info'
+            });            
             this.$router.push('/login')
           })
           .catch((error) => {

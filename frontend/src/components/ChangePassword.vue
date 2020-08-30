@@ -9,7 +9,16 @@
               <v-card-text>
                   <v-form>
                       <v-text-field name="oldPassword" prepend-icon="mdi-lock" v-model="oldPassword" label="Old Password" type="password"></v-text-field>
-                      <v-text-field name="newPassword" prepend-icon="mdi-lock" v-model="newPassword" label="New Password" type="password"></v-text-field>
+                      <v-text-field name="newPassword" 
+                                    prepend-icon="mdi-lock" 
+                                    :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                                    v-model="newPassword" 
+                                    label="New Password" 
+                                    @click:append="() => (show1 = !show1)"
+                                    :type="show1 ? 'text' :'password' "
+                                    :rules="[rules.required, rules.min]"
+                                    hint="At least 10 charcters use !@#$* and numbers.">
+                      </v-text-field>
                   </v-form>
               </v-card-text>
               <v-card-actions>
@@ -29,6 +38,11 @@ export default {
         oldPassword: '',
         newPassword: '',
         token: localStorage.getItem('accToken'),
+        rules: {
+          required: value => !!value || 'required',
+          min: ch => ch.length >=10 || 'Min 10 characters.'
+        },
+        show1: String
     }
   },
   methods: {
@@ -43,11 +57,26 @@ export default {
        } 
      //   console.log(data)
      //   this.clearInput()
-       axios.post('http://localhost:3000/api/Users/change-password?access_token='+this.token, data)
+       axios.post('http://localhost:3000/api/users/change-password?access_token='+this.token, data)
          .then(response => {
-            //  console.log('Woo Hoooo',response)
-             this.clearInput()
-             this.$router.push('/')
+            this.$store.dispatch('setSnackbar',{
+              message: 'Your password have been changed successfully.',
+              color: 'success'
+            });
+             
+            console.log('Woo Hoooo',response)
+            this.clearInput()
+            this.$router.push('/')
+         })
+         .catch(error => {
+           const err_message = error.response.data.error.message;
+            // console.log(typeof(error.response.data.error.message))
+            this.$store.dispatch('setSnackbar',{
+              // message : 'Please, check your email or password.',
+              message: err_message.toUpperCase(),
+              color: 'error'
+            });
+            this.$router.push('/change-password');
          });
      }
   }
