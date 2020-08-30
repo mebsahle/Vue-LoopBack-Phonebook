@@ -1,16 +1,29 @@
 <template>
   <v-app>
     <Header></Header>
+    <v-snackbar
+        v-model="snackbar.showing"
+        :color="snackbar.color"
+        :timeout="0">
+        {{snackbar.message}}
+        <v-btn text color="white" @click="snackbar.showing=false">
+            <v-icon>mdi-close</v-icon>
+        </v-btn>
+    </v-snackbar>
   </v-app>
 </template>
 
 <script>
 import Header from '@/components/layout/Header'
+import { mapState } from 'vuex';
 export default {
   name: 'App',
   components: {
     Header
   },
+  computed: {
+    ...mapState(['snackbar'])
+  }
 }
 </script>
 

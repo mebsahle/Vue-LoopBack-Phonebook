@@ -6,6 +6,8 @@ import SignUp from '@/components/SignUp'
 import Logout from '@/components/Logout'
 import ChangePassword from '@/components/ChangePassword' // commit 9 or the ninth-branch
 import PasswordResetRequest from '@/components/PasswordResetRequest'
+import PasswordReset from '@/components/PasswordReset'
+import store from '../store'
 
 Vue.use(VueRouter)
 
@@ -13,7 +15,10 @@ Vue.use(VueRouter)
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    meta:{
+      requiresAuth: true
+    }
   },
   {
     path: '/login',
@@ -28,12 +33,20 @@ Vue.use(VueRouter)
   {
     path: '/change-password',
     name: 'ChangePassword',
-    component: ChangePassword
+    component: ChangePassword,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/password-reset-request',
     name: 'PasswordResetRequest',
     component: PasswordResetRequest
+  },
+  {
+    path: '/password-reset',
+    name: 'PasswordReset',
+    component: PasswordReset
   },
   {
     path: '/logout',
@@ -54,6 +67,19 @@ const router = new VueRouter({
   // mode: 'history',
   // base: process.env.BASE_URL,
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  if(to.matched.some(record => record.meta.requiresAuth)) {
+    // console.log('in routes', to.matched.some(record => record.meta.requiresAuth))
+    if(store.getters.isLoggedIn){
+      next()
+      return
+    }
+    next('/login')
+  } else {
+    next()
+  }
 })
 
 export default router

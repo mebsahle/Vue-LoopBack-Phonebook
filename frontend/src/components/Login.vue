@@ -11,18 +11,21 @@
                       <v-text-field prepend-icon="mdi-mail"
                                     v-model="email"
                                     label="Email"
-                                    type="text"></v-text-field>
+                                    type="text"
+                                    required
+                                    :rules="emailRules">
+                     </v-text-field>
                       <v-text-field prepend-icon="mdi-lock"
                                     v-model="password"
                                     label="Password"
-                                    type="password"></v-text-field>
+                                    type="password">
+                      </v-text-field>
                   </v-form>
               </v-card-text>
               <v-card-actions>
-                <v-btn @click="login" dark color="normal">Login</v-btn>
-                <v-spacer></v-spacer>
-                <v-btn @click="reqReset" text light color="normal">Forgot Password</v-btn>
-
+                  <v-btn @click="login" dark color="normal">Login</v-btn>
+                  <v-spacer></v-spacer>
+                  <v-btn @click="reqReset" text light color="normal">Forgot Password</v-btn>
               </v-card-actions>
           </v-card>
       </v-flex>
@@ -30,13 +33,17 @@
 </template>
 
 <script>
-import axios from 'axios'
 export default {
     data() {
         return {
             email: '',
             password: '',
-            token: localStorage.getItem('accToken')
+            token: localStorage.getItem('accToken'),
+            user: '',
+            emailRules: [
+                e => !!e || 'Email is required',
+                e => /.+@..+/.test(e) || 'Email must be valid'
+            ],
         }
     },
     methods: {
@@ -44,31 +51,31 @@ export default {
             this.email = ''
             this.password = ''
         },
-        login () {
+        async login () {
             const credentials = {
                 email: this.email,
                 password: this.password
             }
-            console.log(credentials)
+            console.log(credentials) 
             this.clearInput()
             
-            axios.post('http://localhost:3000/api/Users/login', credentials)
-            .then(response => {
-                console.log(response)
-                localStorage.setItem('accToken', this.token)
-                this.clearInput()
-
+            let usr = await this.$store.dispatch('login', credentials)
+            // console.log('ussssssssssssssssssssssr', usr)
+            if(usr.error) {
+                console.log('usr error in login', usr.error)
+                this.$store.dispatch('setSnackbar', {message: usr.error})
+            } else {
+                this.$store.dispatch('setSnackbar',{
+                  message: 'You are successfully logged in',
+                  color: 'success'
+                })
                 this.$bus.$emit('loggedIn')
                 this.$router.push('/')
-            })
-            .catch((error) => {
-                console.log(error);
-            })
+            }
         },
         reqReset() {
             this.$router.push('/password-reset-request')
-
-        }
+        },
     }
 }
 </script>
