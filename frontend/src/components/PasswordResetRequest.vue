@@ -41,7 +41,6 @@ import axios from 'axios'
             e => !!e || 'Email is required',
             e => /.+@..+/.test(e) || 'Email must be valid'
         ],
-        
       }
     },
     methods: {
