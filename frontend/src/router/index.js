@@ -7,6 +7,7 @@ import Logout from '@/components/Logout'
 import ChangePassword from '@/components/ChangePassword' // commit 9 or the ninth-branch
 import PasswordResetRequest from '@/components/PasswordResetRequest'
 import PasswordReset from '@/components/PasswordReset'
+import AccountActivation from '@/components/AccountActivation'
 import store from '../store'
 
 Vue.use(VueRouter)
@@ -47,6 +48,11 @@ Vue.use(VueRouter)
     path: '/password-reset',
     name: 'PasswordReset',
     component: PasswordReset
+  },
+  {
+    path: '/verified',
+    name: 'AccountVerified',
+    component: AccountActivation
   },
   {
     path: '/logout',
