@@ -33,6 +33,9 @@
       "type": "string",
       "required": true
     },
+    "resume": {
+      "type": "string"
+    },
     "picture": {
       "type": "string"
     }
