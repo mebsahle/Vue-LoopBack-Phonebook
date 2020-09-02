@@ -11,7 +11,9 @@ export default new Vuex.Store({
     state : {
         status: '',
         token: localStorage.getItem('accToken') || '',
-        snackbar: {}
+        snackbar: {},
+        user: {},
+        currentUser: {}
     },
     
     getters : {
@@ -32,10 +34,16 @@ export default new Vuex.Store({
         },
         logout(state) {
             state.status = '',
-            state.token = ''
+            state.token = '',
+            state.currentUser = '',
+            window.localStorage.currentUser = JSON.stringify({});
         },
         SET_SNACKBAR(state, snackbar) {
             state.snackbar = snackbar;
+        },
+        SET_CURRENT_USER(state, usr) {
+            state.currentUser = usr;
+            window.localStorage.currentUser = JSON.stringify(usr);
         }
     },
     actions : {
@@ -52,23 +60,37 @@ export default new Vuex.Store({
                     console.log(response)
                     const token = response.data.id
                     localStorage.setItem('accToken', token)
+                    
+                    //find user id
+                    var userID = response.data.userId
+                    // get current username of logged in user
+                    axios.get('http://localhost:3000/api/users/'+userID)
+                    .then(response => {
+                     var usr = response.data.username
+                     console.log(usr);
+                     commit('SET_CURRENT_USER', usr)
+                    })
                     commit('auth_success', token, user)
+                    
                     resolve(response)
                 })
                 .catch(err => {
-                    // const err_message = err.response.data.error.message;
-                    // console.log(typeof(err.response.data.error.message))
-                    // this.$store.dispatch('setSnackbar',{
-                    //   // message : 'Please, check your email or password.',
-                    //   message: err_message.toUpperCase(),
-                    //   color: 'error'
-                    // });
+                    const err_message = err.response.data.error.message;
+                    console.log(err.response.data.error.message)
+                    this.$store.dispatch('setSnackbar',{
+                      // message : 'Please, check your email or password.',
+                      message: err_message.toUpperCase(),
+                      color: 'error'
+                    });
                     commit('auth_error')
                     localStorage.removeItem('accToken')
                     reject(err)
-                })
-            
-            })
+                });
+            });
+        },
+        loadCurrentUser({commit}){
+            let user = JSON.parse(window.localStorage.currentUser);
+            commit('SET_CURRENT_USER', user)
         },
         logout({commit}) {
             return new Promise((resolve) => {
@@ -77,7 +99,6 @@ export default new Vuex.Store({
                 resolve()
             })
         }
-
     }
     
     // export default: {
@@ -85,12 +106,5 @@ export default new Vuex.Store({
     //     getters,
     //     actions,
     //     mutations
-    // }
-
-    // state: {
-    //     snackbar: {showing: true, text: "Testing"}
-    // },
-    // modules: {
-    //     snackbars
     // }
 });
