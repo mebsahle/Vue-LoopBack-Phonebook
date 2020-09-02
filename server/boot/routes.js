@@ -25,6 +25,7 @@ module.exports = function(app) {
 
   //verified
   app.get('/verified', function(req, res) {
+    res.redirect('http://localhost:8080/#/verified')
     res.render('verified');
   });
 
