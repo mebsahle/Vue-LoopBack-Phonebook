@@ -237,7 +237,7 @@ export default {
     },
     getResume(resume){
       // console.log('getResume', resume)
-      var resumePath = 'http:localhost:3000/api/containers/resume/download/'+resume;
+      var resumePath = 'http://localhost:3000/api/containers/resume/download/'+resume;
       return window.location.assign(resumePath)
     },
     editItem (item) {
