@@ -15,7 +15,7 @@
   },
   "User": {
     "dataSource": "UserDs",
-    "public": true
+    "public": false
   },
   "AccessToken": {
     "dataSource": "db",
