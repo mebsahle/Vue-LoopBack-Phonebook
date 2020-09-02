@@ -1,6 +1,11 @@
 <template>
   <div class="home">
-    <v-data-table :headers="headers" :search="search" :items="contacts" sort-by="BasicInfo" class="elevation-1">
+    <v-data-table :headers="headers"
+                  :search="search"
+                  :items="contacts"
+                  sort-by="BasicInfo"
+                  class="elevation-1"
+                  sort-by="BasicInfo">
       <template v-slot:top>
         <v-toolbar flat color="white">
           <h1>
@@ -128,6 +133,7 @@
       </template>
 
     </v-data-table>
+    
   </div>
 </template>
 
@@ -144,10 +150,11 @@ export default {
     headers: [
       { text: '', align: 'left', sortable: false, value: 'picture'},
       { text: 'Basic Info', align: 'start', value: 'BasicInfo', picture: ''},
-      { text: 'Email', value: 'Email'},
-      { text: 'Phone Number', value: 'PhoneNumber'},
-      { text: 'Address', value: 'Address'},
-      { text: 'Working Area', value: 'WorkingArea'},
+      { text: 'Email', sortable: false, value: 'Email'},
+      { text: 'Phone Number', sortable: false, value: 'PhoneNumber'},
+      { text: 'Address', sortable: false, value: 'Address'},
+      { text: 'Working Area', sortable: false, value: 'WorkingArea'},
+      { text: 'Resume', value: 'resume', sortable: false},
       { text: 'Actions', value: 'actions', sortable: false}
     ],
     contacts: [],
@@ -201,6 +208,11 @@ export default {
       .then(response => {
         this.contacts = response.data
       })
+    },
+    getResume(resume){
+      // console.log('getResume', resume)
+      var resumePath = 'http://localhost:3000/api/containers/resume/download/'+resume;
+      return window.location.assign(resumePath)
     },
     addContact() {
       // add contact information to database
@@ -284,8 +296,35 @@ export default {
         this.editedIndex = -1
       })
     },
+    fileUploads() {
+    
+       // send resume file to common/models/storage-resume.js
+        const resumeObj = new FormData();
+        resumeObj.append('file', this.resume)
+
+        axios.post('http://localhost:3000/api/Storageresumes/upload', resumeObj)
+        .then(res => {
+          console.log(res)
+        })
+        .catch(function() {
+          console.log('Resume upload failed')
+        })
+
+        // send picture file to common/models/storage-file.js
+        const fileObj = new FormData();
+        fileObj.append('image', this.picture)
+        
+        // console.log('formdata', fileObj)
+        axios.post('http://localhost:3000/api/StorageFiles/upload', fileObj)
+        .then(res => {
+          console.log(res);
+        })
+        .catch(function() {
+          console.log('Image upload failed')
+        });
+    },
     save () {
-      // this will help saving data fron front end
+      // this will help saving data from front end
       // and from database
       if (this.editedIndex > -1) {
         this.editedContact(this.editedItemId);
@@ -315,8 +354,23 @@ export default {
         .catch(function() {
           console.log('Image upload failed')
         });
+        
+        // send picture file to common/models/storage-file.js
+        const fileObj = new FormData();
+        fileObj.append('image', this.picture)
+        
+        // console.log('formdata', fileObj)
+        axios.post('http://localhost:3000/api/StorageFiles/upload', fileObj)
+        .then(res => {
+          console.log(res);
+        })
+        .catch(function() {
+          console.log('Image upload failed')
+        });
+        
       } else {
         this.addContact();
+        this.fileUploads();
         this.contacts.push(this.editedItem);
       }
       this.close()
