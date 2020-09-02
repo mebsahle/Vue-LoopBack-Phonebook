@@ -86,5 +86,15 @@
         "authentication": "plain"
       }
     ]
+  },
+  "resumeStorage": {
+    "host": "localhost",
+    "port": 5432,
+    "url": "",
+    "database": "Phonebook_",
+    "password": "losthead",
+    "name": "resumeStorage",
+    "user": "meba",
+    "connector": "postgresql"
   }
 }

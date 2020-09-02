@@ -57,5 +57,9 @@
     "options": {
       "emailVerificationRequired": true
     }
+  },
+  "StorageResume": {
+    "dataSource": "resumeStorage",
+    "public": true
   }
 }

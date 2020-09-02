@@ -108,3 +108,18 @@ module.exports = function(app) {
         // });
     });
 };
+
+module.exports = function(app) {
+    app.dataSources.resumeStorage.autoupdate('StorageResume', function(err) {
+        if (err) throw err;
+        
+        // app.models.StorageResume.create([{
+        //     name: 'lunatic.docx',
+        //     type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        //     url: '/api/containers/resume/download/lunatic.docx'
+        // }], function(err, StorageFiles) {
+        //     if(err) throw err;
+        //     console.log('StorageFile: \n', StorageFiles)
+        // });
+    });
+};

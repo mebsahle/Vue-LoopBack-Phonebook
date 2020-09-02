@@ -54,6 +54,17 @@
                     </v-col>
                     <v-col>
                       <v-file-input
+                        v-model="resume"
+                        headers="multipart/form-data"
+                        accept="file/*"
+                        placeholder="Choose file..."
+                        prepend-icon="mdi-attachment"
+                        label="resume"
+                       required>
+                      </v-file-input>
+                    </v-col>
+                    <v-col>
+                      <v-file-input
                         v-model="picture"
                         :rules="rules"
                         headers="multipart/form-data"
@@ -82,7 +93,8 @@
       </template>
 
       <!-- buttons of the form -->
-      <template v-slot:item.picture="{item}">
+      <!-- picture -->
+      <template v-slot:[`item.picture`]="{item}">
         <!-- <h5>{{item.picture}}</h5> -->
         <div class="p-3">
           <v-row justify="space-around">
@@ -93,8 +105,20 @@
         </div>
       </template>
 
+      <!-- resume -->
+      <template v-slot:[`item.resume`]="{item}">
+        <div>
+          <v-row>
+            <h6>{{item.resume}}</h6>
+            <v-icon small color="grey" @click="getResume(item.resume)">
+              mdi-attachment
+            </v-icon>
+          </v-row>
+        </div>
+      </template>
+
       <!-- triggers of Update and Delete data -->
-      <template v-slot:item.actions="{ item }">
+      <template v-slot:[`item.actions`]="{ item }">
         <v-icon small class="mr-2" @click="editItem(item)" color="teal">
           mdi-pencil
         </v-icon>
@@ -113,8 +137,9 @@ import axios from 'axios'
 export default {
   name: 'Home',
   data: () => ({
+    resume:null,
     picture: null,
-    serach: '',
+    search: '',
     dialog: false,
     headers: [
       { text: '', align: 'left', sortable: false, value: 'picture'},
@@ -133,6 +158,7 @@ export default {
       PhoneNumber: '',
       Address: '',
       WorkingArea: '',
+      resume:'',
       picture:''
     },
     defaultItem: {
@@ -142,6 +168,7 @@ export default {
       PhoneNumber: '',
       Address: '',
       WorkingArea: '',
+      resume: '',
       picture: ''
     },
     token: localStorage.getItem('accToken'),
@@ -183,6 +210,7 @@ export default {
         PhoneNumber: this.editedItem.PhoneNumber,
         Address: this.editedItem.Address,
         WorkingArea: this.editedItem.WorkingArea,
+        resume: this.resume.name,
         picture: this.picture.name
       }
 
@@ -200,6 +228,11 @@ export default {
       // console.log(picPath)
       return picPath
     },
+    getResume(resume){
+      // console.log('getResume', resume)
+      var resumePath = 'http:localhost:3000/api/containers/resume/download/'+resume;
+      return window.location.assign(resumePath)
+    },
     editItem (item) {
       // console.log('Here two', this.contacts.indexOf(item),Object.assign({}, item))
       this.editedIndex = this.contacts.indexOf(item) + 1
@@ -216,6 +249,7 @@ export default {
         Address: this.editedItem.Address,
         WorkingArea: this.editedItem.WorkingArea,
         id: editedItemId,
+        resume:this.resume.name,
         picture: this.picture.name
       }
       // console.log('editeed version', this.picture.name)
@@ -257,6 +291,18 @@ export default {
         this.editedContact(this.editedItemId);
         Object.assign(this.contacts[this.editedIndex-1], this.editedItem);
 
+        // send resume file to common/models/storage-resume.js
+        const resumeObj = new FormData();
+        resumeObj.append('file', this.resume)
+
+        axios.post('http://localhost:3000/api/Storageresumes/upload', resumeObj)
+        .then(res => {
+          console.log(res)
+        })
+        .catch(function() {
+          console.log('Resume upload failed')
+        })
+
         // send picture file to common/models/storage-file.js
         const fileObj = new FormData();
         fileObj.append('image', this.picture)
@@ -267,7 +313,7 @@ export default {
           console.log(res);
         })
         .catch(function() {
-          console.log('Failed')
+          console.log('Image upload failed')
         });
       } else {
         this.addContact();
