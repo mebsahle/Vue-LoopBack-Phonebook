@@ -23,7 +23,7 @@
                   </v-form>
               </v-card-text>
               <v-card-actions>
-                  <v-btn @click="login" dark color="normal">Login</v-btn>
+                  <v-btn @click="Login" dark color="normal">Login</v-btn>
                   <v-spacer></v-spacer>
                   <v-btn @click="reqReset" text light color="normal">Forgot Password</v-btn>
               </v-card-actions>
@@ -51,7 +51,7 @@ export default {
             this.email = ''
             this.password = ''
         },
-        async login () {
+        async Login () {
             const credentials = {
                 email: this.email,
                 password: this.password
