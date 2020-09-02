@@ -59,7 +59,7 @@ export default {
             message : 'Password reset successfull.',
             color: 'success'
           });
-          //  console.log('Woo Hoooo',response)
+           console.log('Woo Hoooo',response)
            this.clearInput()
            this.$router.push('/login')
         })
