@@ -3,6 +3,12 @@
     "name": "db",
     "connector": "memory"
   },
+  "contactsImage": {
+    "name": "contactsImage",
+    "connector": "loopback-component-storage",
+    "provider": "filesystem",
+    "root": "./server/storage"
+  },
   "userDs": {
     "host": "localhost",
     "port": 3306,
@@ -22,12 +28,6 @@
     "name": "contactInfo",
     "user": "root",
     "connector": "mysql"
-  },
-  "contactsImage": {
-    "name": "contactsImage",
-    "connector": "loopback-component-storage",
-    "provider": "filesystem",
-    "root": "./server/storage"
   },
   "fileStorage": {
     "host": "localhost",
@@ -92,7 +92,7 @@
     "port": 5432,
     "url": "",
     "database": "Phonebook_",
-    "password": "losthead",
+    "password": "********",
     "name": "resumeStorage",
     "user": "meba",
     "connector": "postgresql"
