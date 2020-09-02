@@ -231,11 +231,6 @@ export default {
         this.contacts = response.data
       })
     },
-    getResume(resume){
-      // console.log('getResume', resume)
-      var resumePath = 'http://localhost:3000/api/containers/resume/download/'+resume;
-      return window.location.assign(resumePath)
-    },
     addContact() {
       // add contact information to database
       const contact_data = {
@@ -364,19 +359,6 @@ export default {
           console.log('Resume upload failed')
         })
 
-        // send picture file to common/models/storage-file.js
-        const fileObj = new FormData();
-        fileObj.append('image', this.picture)
-        
-        // console.log('formdata', fileObj)
-        axios.post('http://localhost:3000/api/StorageFiles/upload', fileObj)
-        .then(res => {
-          console.log(res);
-        })
-        .catch(function() {
-          console.log('Image upload failed')
-        });
-        
         // send picture file to common/models/storage-file.js
         const fileObj = new FormData();
         fileObj.append('image', this.picture)
