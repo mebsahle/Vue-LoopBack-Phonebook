@@ -5,7 +5,9 @@
                   :items="contacts"
                   sort-by="BasicInfo"
                   class="elevation-1"
-                  sort-by="BasicInfo">
+                  hide-default-footer
+                  :page.sync="page"
+                  :items-per-page="itemsPerPage">
       <template v-slot:top>
         <v-toolbar flat color="white">
           <h1>
@@ -30,7 +32,9 @@
           <!-- to add new contact or to edit one -->
           <v-dialog v-model="dialog" max-width="500px">
             <template v-slot:activator="{ on, attrs }">
-              <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">New Contact</v-btn>
+              <v-btn color="#2c3e50" dark class="mb-2" v-bind="attrs" v-on="on">
+                <v-icon>mdi-account-plus</v-icon>
+              </v-btn>            
             </template>
 
             <!-- contact form -->
@@ -134,6 +138,22 @@
 
     </v-data-table>
     
+    <footer style="height:50px">  
+      <v-bottom-navigation absolute style="height: 140px">
+          <!-- <v-btn> -->
+            <v-col cols="3">
+            <v-container justify="center" class="max-width">
+              <v-pagination v-model="page" 
+                            class="my-4" 
+                            circle 
+                            :length="Math.ceil(contacts.length/itemsPerPage)">
+              </v-pagination>
+            </v-container>
+          </v-col>
+          <!-- </v-btn> -->
+      </v-bottom-navigation>
+      </footer>
+
   </div>
 </template>
 
@@ -143,6 +163,8 @@ import axios from 'axios'
 export default {
   name: 'Home',
   data: () => ({
+    page: 1,
+    itemsPerPage: 6,
     resume:null,
     picture: null,
     search: '',
