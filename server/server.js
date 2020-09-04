@@ -17,9 +17,9 @@ let transporter = nodemailer.createTransport({
   secure: true,
   auth: {
     type: 'OAuth2',
-    user: 'mebatsionsahle@gmail.com',
-    clientId: "688584225307-a6udce8jctmth6u548up1tvs1bi57q4f.apps.googleusercontent.com",
-    clientSecret: "Hj98NenbebJ9C4z-y7DAvTLx"
+    user: 'youraccount@gmail.com',
+    clientId: "xxxxxx-xxxx.apps.googleusercontent.com",
+    clientSecret: "yoursecret"
   },
 });
 
