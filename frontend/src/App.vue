@@ -4,7 +4,7 @@
     <v-snackbar
         v-model="snackbar.showing"
         :color="snackbar.color"
-        :timeout="0">
+        :timeout="-1">
         {{snackbar.message}}
         <v-btn text color="white" @click="snackbar.showing=false">
             <v-icon>mdi-close</v-icon>

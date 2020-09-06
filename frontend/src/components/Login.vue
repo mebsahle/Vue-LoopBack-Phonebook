@@ -8,18 +8,19 @@
               </v-toolbar>
               <v-card-text>
                   <v-form>
-                      <v-text-field prepend-icon="mdi-mail"
+                    <v-text-field id="email" 
+                                    prepend-icon="mdi-mail"
                                     v-model="email"
                                     label="Email"
-                                    type="text"
+                                    type="email"
                                     required
                                     :rules="emailRules">
-                     </v-text-field>
-                      <v-text-field prepend-icon="mdi-lock"
+                    </v-text-field>
+                    <v-text-field prepend-icon="mdi-lock"
                                     v-model="password"
                                     label="Password"
                                     type="password">
-                      </v-text-field>
+                    </v-text-field>
                   </v-form>
               </v-card-text>
               <v-card-actions>

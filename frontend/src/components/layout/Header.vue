@@ -13,10 +13,10 @@
             <template v-slot:activator="{ on }">
               <v-btn dark text v-on="on">
                 <div v-if="currentUser && token">
-                    {{currentUser}}
+                    {{currentUser.username}}
                   </div>
                   <div v-else>
-                    <v-btn dark text><v-icon>{{'mdi-dots-vertical'}}</v-icon></v-btn>
+                    <v-icon>{{'mdi-dots-vertical'}}</v-icon>
                   </div>
                 </v-btn>
             </template>
@@ -54,20 +54,7 @@ export default {
   },
   methods: {
     onLoggedIn() {
-        this.navs=this.authNav;
-
-    data() {
-        return {
-            title: "Phonebook",
-            navs: [],
-            noAuthNav: [
-                {name: 'login', route: 'Login'},
-                {name: 'sign up', route: 'SignUp'},
-            ],
-            authNav: [
-                {name: 'logout', route: 'Logout'}
-            ],
-        }
+      this.navs=this.authNav;
     },
     onLogout() {
         this.navs=this.noAuthNav;

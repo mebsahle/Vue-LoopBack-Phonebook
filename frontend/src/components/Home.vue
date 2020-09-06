@@ -7,7 +7,8 @@
                   class="elevation-1"
                   hide-default-footer
                   :page.sync="page"
-                  :items-per-page="itemsPerPage">
+                  :items-per-page="itemsPerPage"
+                  @click:row="handleClick">
       <template v-slot:top>
         <v-toolbar flat color="white">
           <h1>
@@ -40,7 +41,7 @@
             <!-- contact form -->
             <v-card>
               <v-card-title>
-                  <span class="headline">{{ formTitle }}</span>
+                <span class="headline">{{ formTitle }}</span>
               </v-card-title>
 
               <v-card-text>
@@ -108,7 +109,9 @@
         <div class="p-3">
           <v-row justify="space-around">
             <v-avatar size="48">
-              <span class="white--text headline"><img :src="getPicture(item.picture)" style="width: 48px; height: 55px;" :alt="item.picture"/></span>
+              <span class="white--text headline">
+                <img :src="getPicture(item.picture)" style="width: 48px; height: 55px;" :alt="item.picture"/>
+              </span>
             </v-avatar>
           </v-row>
         </div>
@@ -138,8 +141,8 @@
 
     </v-data-table>
     
-    <footer style="height:50px">  
-      <v-bottom-navigation absolute style="height: 140px">
+    <footer style="height: 10px">  
+      <v-bottom-navigation absolute style="height: 122px">
           <!-- <v-btn> -->
             <v-col cols="3">
             <v-container justify="center" class="max-width">
@@ -164,7 +167,7 @@ export default {
   name: 'Home',
   data: () => ({
     page: 1,
-    itemsPerPage: 6,
+    itemsPerPage: 7,
     resume:null,
     picture: null,
     search: '',
@@ -252,15 +255,20 @@ export default {
     },
     getPicture(picture) {
       // get picture name and read it from the database
-      // console.log('getPict', picture)
-      var picPath = 'http://localhost:3000/api/containers/common/download/'+picture;
+      console.log('getPict', picture)
+      var picPath = `http://localhost:3000/api/containers/common/download/${picture}`;
       // console.log(picPath)
       return picPath
     },
     getResume(resume){
       // console.log('getResume', resume)
-      var resumePath = 'http:localhost:3000/api/containers/resume/download/'+resume;
+      var resumePath = `http://localhost:3000/api/containers/resume/download/${resume}`;
       return window.location.assign(resumePath)
+    },
+    handleClick(value) {
+      // alert('handle click',value)
+      console.log('handle',value.id)
+      this.$router.push({name: 'Profile', params:{id:value.id}})
     },
     editItem (item) {
       // console.log('Here two', this.contacts.indexOf(item),Object.assign({}, item))
