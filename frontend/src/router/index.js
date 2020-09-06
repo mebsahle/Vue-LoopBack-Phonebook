@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Home from '@/components/Home.vue'
 import Login from '@/components/Login'
 import SignUp from '@/components/SignUp'
 import Logout from '@/components/Logout'
@@ -8,6 +8,7 @@ import ChangePassword from '@/components/ChangePassword' // commit 9 or the nint
 import PasswordResetRequest from '@/components/PasswordResetRequest'
 import PasswordReset from '@/components/PasswordReset'
 import AccountActivation from '@/components/AccountActivation'
+import Profile from '@/components/Profile'
 import store from '../store'
 
 Vue.use(VueRouter)
@@ -20,6 +21,12 @@ Vue.use(VueRouter)
     meta:{
       requiresAuth: true
     }
+  },
+  {
+    path: '/profile/:id',
+    name: 'Profile',
+    component: Profile,
+    props: true
   },
   {
     path: '/login',

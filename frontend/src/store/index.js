@@ -66,7 +66,7 @@ export default new Vuex.Store({
                     // get current username of logged in user
                     axios.get('http://localhost:3000/api/users/'+userID)
                     .then(response => {
-                     var usr = response.data.username
+                     var usr = response.data
                      console.log(usr);
                      commit('SET_CURRENT_USER', usr)
                     })
@@ -76,12 +76,12 @@ export default new Vuex.Store({
                 })
                 .catch(err => {
                     const err_message = err.response.data.error.message;
-                    console.log(err.response.data.error.message)
-                    this.$store.dispatch('setSnackbar',{
-                      // message : 'Please, check your email or password.',
-                      message: err_message.toUpperCase(),
-                      color: 'error'
-                    });
+                    console.log(err_message,err.response.data.error.message)
+                    // this.$store.dispatch('setSnackbar',{
+                    //   // message : 'Please, check your email or password.',
+                    //   message: err_message.toUpperCase(),
+                    //   color: 'error'
+                    // });
                     commit('auth_error')
                     localStorage.removeItem('accToken')
                     reject(err)
