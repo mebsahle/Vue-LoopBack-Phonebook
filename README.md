@@ -22,6 +22,6 @@ node .
 
 ## Built with
 
-* [VUE-CLI](https://cli.vuejs.org/)
+* [Vue.js](https://vuejs.org/)
 * [Loopback 3.x](https://loopback.io/doc/en/lb3/)
 * [Vuex](https://vuex.vuejs.org/)
